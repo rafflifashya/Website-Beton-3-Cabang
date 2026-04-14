@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beton 3 Cabang – Toko Bangunan</title>
+
+  <!-- ═══════════════════════════════════════════════
+       FONT: Bebas Neue (display) + Barlow (body)
+  ══════════════════════════════════════════════════ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ══════════════════════════════════════════════
+       CSS VARIABLES — Ganti warna di sini saja
+    ══════════════════════════════════════════════ */
+    :root {
+      --bg:        #0e0e0e;
+      --surface:   #1a1a1a;
+      --border:    #2a2a2a;
+      --accent:    #f5c518;   /* kuning utama */
+      --accent2:   #e5a800;   /* kuning hover  */
+      --text:      #e8e8e8;
+      --muted:     #888;
+      --white:     #fff;
+      --radius:    10px;
+      --shadow:    0 4px 24px rgba(0,0,0,.5);
+    }
+
+    /* ══════════════════════════════════════════════
+       RESET & BASE
+    ══════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    img { max-width: 100%; display: block; }
+
+    section { padding: 80px 20px; }
+
+    .container {
+      max-width: 1160px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      letter-spacing: 2px;
+      color: var(--white);
+      position: relative;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      height: 4px;
+      width: 60px;
+      background: var(--accent);
+      margin-top: 6px;
+      border-radius: 2px;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      margin-bottom: 48px;
+      font-size: .95rem;
+    }
+
+    /* ══════════════════════════════════════════════
+       NAVBAR
+    ══════════════════════════════════════════════ */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(14,14,14,.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow .3s;
+    }
+
+    #navbar.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,.6); }
+
+    .nav-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 20px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Logo */
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.7rem;
+      letter-spacing: 3px;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-logo span {
+      color: var(--accent);
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .85rem;
+      color: #000;
+      font-weight: 700;
+    }
+
+    /* Menu */
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 36px;
+    }
+
+    .nav-menu a {
+      font-weight: 600;
+      font-size: .9rem;
+      letter-spacing: .5px;
+      color: var(--muted);
+      text-transform: uppercase;
+      transition: color .25s;
+      position: relative;
+    }
+
+    .nav-menu a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 2px;
+      background: var(--accent);
+      transition: width .3s;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a.active { color: var(--white); }
+    .nav-menu a:hover::after { width: 100%; }
+
+    /* Hamburger (mobile) */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 26px; height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: transform .3s, opacity .3s;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ══════════════════════════════════════════════
+       HERO / BANNER
+    ══════════════════════════════════════════════ */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 64px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Latar belakang industrial: garis diagonal */
+    #home::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          -55deg,
+          transparent,
+          transparent 40px,
+          rgba(255,255,255,.015) 40px,
+          rgba(255,255,255,.015) 41px
+        );
+      pointer-events: none;
+    }
+
+    /* Sinar kuning besar di kanan */
+    .hero-glow {
+      position: absolute;
+      right: -200px; top: -100px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(245,197,24,.18) 0%, transparent 70%);
+      pointer-events: none;
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .6; transform: scale(1.1); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(245,197,24,.12);
+      border: 1px solid rgba(245,197,24,.3);
+      color: var(--accent);
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+      animation: fadeUp .6s ease both;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 10vw, 7rem);
+      line-height: .95;
+      letter-spacing: 3px;
+      color: var(--white);
+      animation: fadeUp .7s .1s ease both;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-desc {
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 480px;
+      animation: fadeUp .7s .2s ease both;
+    }
+
+    .hero-actions {
+      margin-top: 36px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      animation: fadeUp .7s .3s ease both;
+    }
+
+    /* ══════════════════════════════════════════════
+       BUTTONS
+    ══════════════════════════════════════════════ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: var(--radius);
+      font-family: 'Barlow', sans-serif;
+      font-weight: 700;
+      font-size: .9rem;
+      letter-spacing: .5px;
+      cursor: pointer;
+      border: none;
+      transition: transform .2s, box-shadow .2s, background .2s;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+      box-shadow: 0 4px 20px rgba(245,197,24,.35);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent2);
+      box-shadow: 0 6px 28px rgba(245,197,24,.5);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ══════════════════════════════════════════════
+       STATS BAR (di bawah hero)
+    ══════════════════════════════════════════════ */
+    .stats-bar {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 24px 20px;
+    }
+
+    .stats-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.4rem;
+      color: var(--accent);
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: .78rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ══════════════════════════════════════════════
+       PRODUK
+    ══════════════════════════════════════════════ */
+    #produk { background: var(--bg); }
+
+    /* Filter tabs */
+    .filter-tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+
+    .tab-btn {
+      padding: 8px 20px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-family: 'Barlow', sans-serif;
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .tab-btn:hover { border-color: var(--accent); color: var(--white); }
+    .tab-btn.active { background: var(--accent); border-color: var(--accent); color: #000; }
+
+    /* Grid produk */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    /* Kartu produk */
+    .product-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform .3s, box-shadow .3s, border-color .3s;
+      cursor: default;
+      /* animasi masuk */
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp .5s ease forwards;
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow);
+      border-color: rgba(245,197,24,.3);
+    }
+
+    .product-img-wrap {
+      position: relative;
+      height: 190px;
+      background: #111;
+      overflow: hidden;
+    }
+
+    .product-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .5s;
+      /* Gambar dummy via placeholder — ganti src-nya nanti */
+    }
+
+    .product-card:hover .product-img-wrap img { transform: scale(1.07); }
+
+    .product-badge {
+      position: absolute;
+      top: 10px; left: 10px;
+      background: var(--accent);
+      color: #000;
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 4px;
+    }
+
+    .product-body {
+      padding: 18px;
+    }
+
+    .product-cat {
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .product-name {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .product-desc {
+      font-size: .8rem;
+      color: var(--muted);
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    .product-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .product-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      color: var(--accent);
+      letter-spacing: 1px;
+    }
+
+    /* Tombol tanya di kartu produk → WhatsApp */
+    .btn-wa-card {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(37,211,102,.12);
+      border: 1px solid rgba(37,211,102,.3);
+      color: #25d366;
+      font-size: .78rem;
+      font-weight: 700;
+      padding: 7px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background .2s, transform .2s;
+      text-decoration: none;
+    }
+
+    .btn-wa-card:hover {
+      background: rgba(37,211,102,.22);
+      transform: scale(1.05);
+    }
+
+    /* ══════════════════════════════════════════════
+       TENTANG KAMI (singkat)
+    ══════════════════════════════════════════════ */
+    #tentang {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tentang-inner {
+      display: flex;
+      gap: 60px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .tentang-text { flex: 1; min-width: 260px; }
+
+    .tentang-text p {
+      color: var(--muted);
+      margin-top: 16px;
+      margin-bottom: 28px;
+      line-height: 1.8;
+    }
+
+    .tentang-visual {
+      flex: 1;
+      min-width: 260px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .info-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      transition: border-color .3s;
+    }
+
+    .info-card:hover { border-color: var(--accent); }
+
+    .info-card .icon {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    .info-card h4 {
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .info-card p {
+      font-size: .78rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    /* ══════════════════════════════════════════════
+       KONTAK
+    ══════════════════════════════════════════════ */
+    #kontak { background: var(--bg); }
+
+    .kontak-inner {
+      display: flex;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+
+    /* Form */
+    .kontak-form { flex: 1; min-width: 280px; }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: .8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      color: var(--white);
+      font-family: 'Barlow', sans-serif;
+      font-size: .95rem;
+      outline: none;
+      transition: border-color .25s, box-shadow .25s;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--muted); }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(245,197,24,.12);
+    }
+
+    .form-group textarea { resize: vertical; min-height: 130px; }
+
+    /* Info kontak */
+    .kontak-info { flex: 1; min-width: 260px; }
+
+    .kontak-info h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 2px;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+
+    .info-row {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .info-row .icon {
+      font-size: 1.3rem;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .info-row h4 {
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .info-row p, .info-row a {
+      font-size: .9rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .info-row a:hover { color: var(--accent); }
+
+    /* Kotak jam operasional */
+    .jam-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin-top: 28px;
+    }
+
+    .jam-box h4 {
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+      font-size: .9rem;
+    }
+
+    .jam-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: .85rem;
+      color: var(--muted);
+      padding: 4px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .jam-row:last-child { border-bottom: none; }
+    .jam-row span:last-child { color: var(--accent); font-weight: 600; }
+
+    /* ══════════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════════ */
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 40px 20px 28px;
+    }
+
+    .footer-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 3px;
+      color: var(--white);
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    .footer-copy {
+      font-size: .8rem;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    /* ══════════════════════════════════════════════
+       FLOATING WHATSAPP BUTTON
+    ══════════════════════════════════════════════ */
+    .wa-float {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      z-index: 999;
+      background: #25d366;
+      color: #fff;
+      width: 58px; height: 58px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,.5);
+      transition: transform .25s, box-shadow .25s;
+      /* Animasi berkedip */
+      animation: waPulse 2.5s ease-in-out infinite;
+    }
+
+    .wa-float:hover {
+      transform: scale(1.12);
+      box-shadow: 0 6px 28px rgba(37,211,102,.7);
+      animation: none;
+    }
+
+    .wa-float svg { width: 28px; height: 28px; }
+
+    @keyframes waPulse {
+      0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,.5); }
+      50%       { box-shadow: 0 4px 36px rgba(37,211,102,.85); }
+    }
+
+    /* Tooltip WA */
+    .wa-tooltip {
+      position: absolute;
+      right: 68px;
+      background: #111;
+      color: var(--white);
+      font-size: .78rem;
+      font-weight: 600;
+      white-space: nowrap;
+      padding: 6px 12px;
+      border-radius: 6px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .25s;
+    }
+
+    .wa-float:hover .wa-tooltip { opacity: 1; }
+
+    /* ══════════════════════════════════════════════
+       ANIMASI UMUM
+    ══════════════════════════════════════════════ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Kelas untuk scroll-reveal (ditambah JS) */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ══════════════════════════════════════════════
+       RESPONSIVE MOBILE
+    ══════════════════════════════════════════════ */
+    @media (max-width: 768px) {
+      section { padding: 60px 16px; }
+
+      /* Navbar mobile */
+      .nav-menu {
+        display: none;
+        position: absolute;
+        top: 64px; left: 0; right: 0;
+        background: rgba(14,14,14,.97);
+        flex-direction: column;
+        padding: 20px;
+        gap: 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-menu.open { display: flex; }
+
+      .nav-menu li { border-bottom: 1px solid var(--border); }
+      .nav-menu li:last-child { border-bottom: none; }
+      .nav-menu a { display: block; padding: 14px 0; color: var(--text); }
+
+      .hamburger { display: flex; }
+
+      /* Hero */
+      .hero-title { font-size: clamp(3rem, 14vw, 5rem); }
+
+      /* Tentang */
+      .tentang-visual { grid-template-columns: 1fr 1fr; }
+
+      /* Footer */
+      .footer-copy { text-align: left; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════════════
+       NAVBAR
+  ═════════════════════════════════════════════ -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <!-- Logo toko -->
+      <a href="#home" class="nav-logo">
+        <div class="logo-icon">B3C</div>
+        BETON <span>3 CABANG</span>
+      </a>
+
+      <!-- Menu utama -->
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#home"   class="active">Home</a></li>
+        <li><a href="#produk">Produk</a></li>
+        <li><a href="#kontak">Kontak</a></li>
+      </ul>
+
+      <!-- Tombol hamburger (mobile) -->
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════════════════
+       HERO / LANDING
+  ═════════════════════════════════════════════ -->
+  <section id="home">
+    <div class="hero-glow"></div>
+    <div class="container">
+      <div class="hero-content">
+
+        <div class="hero-badge">⚡ Terpercaya Sejak 2009</div>
+
+<h1 class="hero-title">
+  BETON<br><em>3 CABANG</em>
+</h1>
+
+<p style="color: var(--accent); font-weight: 700; letter-spacing: 2px; margin-top: -10px; margin-bottom: 10px; font-size: 0.9rem; text-transform: uppercase;">
+  Sinar Beton • Raja Beton • Jaya Beton
+</p>
+
+        <p class="hero-desc">
+          Kami spesialis besi beton, cakar ayam, sloof, ring baja ringan, bondek, spandek dan lain lain. Menyediakan kebutuhan kerangka bangunan Anda dengan kualitas terbaik dan harga bersaing.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#produk" class="btn btn-primary">
+            🧱 Lihat Produk
+          </a>
+          <a href="#kontak" class="btn btn-outline">
+            Hubungi Kami
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats bar -->
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Jenis Produk</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">17+</div>
+        <div class="stat-label">Tahun Berpengalaman</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">1000+</div>
+        <div class="stat-label">Pelanggan Puas</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">7</div>
+        <div class="stat-label">Hari Buka</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       PRODUK
+  ═════════════════════════════════════════════ -->
+  <section id="produk">
+    <div class="container">
+
+      <div class="reveal">
+        <h2 class="section-title">PRODUK KAMI</h2>
+        <p class="section-sub">Semua kebutuhan bangunan Anda tersedia di sini</p>
+      </div>
+
+      <!-- Filter kategori -->
+      <div class="filter-tabs reveal" id="filterTabs">
+        <button class="tab-btn active" data-filter="all">Semua</button>
+        <!-- Tab lain dibuat otomatis oleh JS -->
+      </div>
+
+      <!-- Grid produk — diisi JS -->
+      <div class="product-grid" id="productGrid"></div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       TENTANG
+  ═════════════════════════════════════════════ -->
+  <section id="tentang">
+    <div class="container tentang-inner">
+
+      <div class="tentang-text reveal">
+        <h2 class="section-title">TENTANG<br>BETON 3 CABANG</h2>
+        <p>
+          Beton 3 Cabang adalah toko material bangunan yang telah melayani pelanggan sejak tahun 2009. Kami berkomitmen menyediakan produk berkualitas dengan harga yang kompetitif dan pelayanan yang ramah.
+        </p>
+        <a href="#kontak" class="btn btn-primary">Hubungi Kami</a>
+      </div>
+
+      <div class="tentang-visual reveal">
+        <div class="info-card">
+          <div class="icon">🏆</div>
+          <h4>Kualitas Terjamin</h4>
+          <p>Produk dari supplier terpercaya</p>
+        </div>
+        <div class="info-card">
+          <div class="icon">🚚</div>
+          <h4>Bisa Diantar</h4>
+          <p>Layanan pengiriman ke lokasi</p>
+        </div>
+        <div class="info-card">
+          <div class="icon">💰</div>
+          <h4>Harga Bersaing</h4>
+          <p>Harga grosir untuk pembelian besar</p>
+        </div>
+        <div class="info-card">
+          <div class="icon">📞</div>
+          <h4>Siap Konsultasi</h4>
+          <p>Tim kami siap membantu Anda</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       KONTAK
+  ═════════════════════════════════════════════ -->
+  <section id="kontak">
+    <div class="container">
+
+      <div class="reveal">
+        <h2 class="section-title">HUBUNGI KAMI</h2>
+        <p class="section-sub">Ada pertanyaan? Kami siap membantu</p>
+      </div>
+
+      <div class="kontak-inner">
+
+        <!-- Form kontak -->
+        <div class="kontak-form reveal">
+          <div class="form-group">
+            <label for="nama">Nama Lengkap</label>
+            <input type="text" id="nama" placeholder="Contoh: Budi Santoso" />
+          </div>
+          <div class="form-group">
+            <label for="hp">Nomor HP / WhatsApp</label>
+            <input type="tel" id="hp" placeholder="Contoh: 08xxxxxxxxxx" />
+          </div>
+          <div class="form-group">
+            <label for="pesan">Pesan / Pertanyaan</label>
+            <textarea id="pesan" placeholder="Tulis pesan atau pertanyaan Anda..."></textarea>
+          </div>
+          <!-- Klik kirim → redirect ke WhatsApp -->
+          <button class="btn btn-primary" onclick="kirimPesan()" style="width:100%;">
+            📲 Kirim via WhatsApp
+          </button>
+        </div>
+
+        <!-- Info kontak & jam buka -->
+        <div class="kontak-info reveal">
+          <h3>INFO TOKO</h3>
+
+          <div class="info-row">
+  <span class="icon">📍</span>
+  <div>
+    <h4>Alamat Kami</h4>
+    <p style="margin-bottom: 12px;">
+      <strong>Cabang Jagakarsa : Sinar Beton</strong><br>
+      Jl. Moh Kahfi 1, Jagakarsa, Jakarta, Indonesia
+    </p>
+    <p style="margin-bottom: 12px;">
+      <strong>Cabang Limo: Raja Beton</strong><br>
+      Jl. Limo Raya No. 88, Depok, Indonesia
+    </p>
+    <p>
+      <strong>Cabang Cipedak: Jaya Beton</strong><br>
+      Cipedak, Jagakarsa, Jakarta Selatan, Indonesia
+    </p>
+  </div>
+</div>
+
+<div class="info-row">
+  <span class="icon">📞</span>
+  <div>
+    <h4>Hubungi Cabang Kami</h4>
+    
+    <div style="margin-bottom: 15px;">
+      <strong>Sinar Beton:</strong><br>
+      <a href="https://wa.me/6281294218550" target="_blank" style="display: block;">📱 0812-9421-8550 (WA)</a>
+      <a href="tel:02178885082" style="display: block;">☎️ (021) 7888-5082</a>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <strong>Raja Beton:</strong><br>
+      <a href="https://wa.me/628111042326" target="_blank" style="display: block;">📱 0811-1042-326 (WA)</a>
+      <a href="tel:0217538311" style="display: block;">☎️ (021) 753-8311</a>
+    </div>
+
+    <div>
+      <strong>Jaya Beton:</strong><br>
+      <a href="https://wa.me/6281118895970" target="_blank" style="display: block;">📱 0811-1889-5970 (WA)</a>
+      <a href="tel:02178893309" style="display: block;">☎️ (021) 7889-3309</a>
+    </div>
+  </div>
+</div>
+
+<div class="info-row">
+  <span class="icon">📧</span>
+  <div>
+    <h4>Email Cabang</h4>
+    <p style="margin-bottom: 10px;">
+      <strong>Sinar Beton:</strong><br>
+      <a href="mailto:sinarbeton967@gmail.com">sinarbeton967@gmail.com</a>
+    </p>
+    <p style="margin-bottom: 10px;">
+      <strong>Jaya Beton:</strong><br>
+      <a href="mailto:sitiudinpeapisan@gmail.com">sitiudinpeapisan@gmail.com</a>
+    </p>
+    <p>
+      <strong>Raja Beton:</strong><br>
+      <a href="mailto:rajabetonlimo@gmail.com">rajabetonlimo@gmail.com</a>
+    </p>
+  </div>
+</div>
+
+          <!-- Jam operasional -->
+          <div class="jam-box">
+            <h4>🕐 Jam Operasional</h4>
+            <div class="jam-row">
+              <span>Senin – Jumat</span>
+              <span>07.00 – 16.30</span>
+            </div>
+            <div class="jam-row">
+              <span>Sabtu</span>
+              <span>07.00 – 16.30</span>
+            </div>
+            <div class="jam-row">
+              <span>Minggu</span>
+              <span>07.00 – 16.30</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       FOOTER
+  ═════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">BETON <span>3 CABANG</span></div>
+    <p class="footer-copy">
+      &copy; 2026 Beton 3 Cabang. Semua hak dilindungi.<br>
+      Solusi Besi Beton & Material Konstruksi - Jagakarsa & Depok
+    </p>
+  </div>
+</footer>
+
+  <!-- ════════════════════════════════════════════
+       FLOATING WHATSAPP BUTTON
+       Klik → buka wa.me (format internasional: 62 + 085...)
+  ═════════════════════════════════════════════ -->
+  <a
+    class="wa-float"
+    href="https://wa.me/6281294218550"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Chat WhatsApp"
+  >
+    <span class="wa-tooltip">Chat WhatsApp</span>
+    <!-- Ikon WhatsApp SVG -->
+    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16 3C8.832 3 3 8.832 3 16c0 2.3.617 4.455 1.686 6.312L3 29l6.875-1.664A12.93 12.93 0 0 0 16 29c7.168 0 13-5.832 13-13S23.168 3 16 3Z" fill="#fff"/>
+      <path d="M21.6 19.2c-.32-.16-1.888-.928-2.176-1.04-.288-.096-.496-.16-.704.16-.208.32-.816 1.04-.992 1.248-.192.208-.368.224-.688.08-.32-.16-1.36-.496-2.592-1.584-.96-.848-1.6-1.904-1.792-2.224-.192-.32-.016-.496.144-.656.144-.144.32-.368.48-.56.16-.176.208-.32.32-.528.096-.208.048-.384-.016-.544-.08-.16-.704-1.696-.976-2.32-.256-.608-.512-.528-.704-.544-.192 0-.4-.016-.608-.016-.208 0-.544.08-.832.384-.288.32-1.088 1.056-1.088 2.576s1.12 3.008 1.28 3.2c.16.192 2.208 3.376 5.36 4.736.752.32 1.328.512 1.792.656.752.24 1.44.208 1.984.128.608-.096 1.888-.768 2.16-1.52.272-.736.272-1.376.192-1.52-.08-.128-.288-.208-.608-.368Z" fill="#25d366"/>
+    </svg>
+  </a>
+
+  <!-- ════════════════════════════════════════════
+       JAVASCRIPT
+  ═════════════════════════════════════════════ -->
+  <script>
+    /* ─────────────────────────────────────────────
+       DATA PRODUK
+       ✏️  Tambah produk baru di sini saja!
+       Format: { nama, kategori, harga, satuan, deskripsi, gambar, badge }
+       - gambar: URL gambar (bisa pakai link langsung atau path lokal)
+       - badge: opsional, misal "PROMO" / "BARU" / null
+    ────────────────────────────────────────────── */
+    const produkData = [
+      {
+        nama: "Semen Portland",
+        kategori: "Semen",
+        harga: "68.000",
+        satuan: "/ sak",
+        deskripsi: "Semen kualitas terbaik untuk konstruksi rumah & gedung.",
+        gambar: "https://placehold.co/400x300/1a1a1a/f5c518?text=Semen+Portland",
+        badge: "PROMO"
+      },
+      {
+        nama: "Besi Beton Ulir D10",
+        kategori: "Besi",
+        harga: "95.000",
+        satuan: "/ batang",
+        deskripsi: "Besi beton ulir diameter 10 mm, panjang 12 meter.",
+        gambar: "https://placehold.co/400x300/1a1a1a/f5c518?text=Besi+Beton+D10",
+        badge: null
+      },
+      {
+        nama: "Pasir Pasang",
+        kategori: "Pasir",
+        harga: "200.000",
+        satuan: "/ m³",
+        deskripsi: "Pasir bersih untuk pasangan bata, plesteran, dan adukan.",
+        gambar: "https://placehold.co/400x300/1a1a1a/f5c518?text=Pasir+Pasang",
+        badge: null
+      },
+      {
+        nama: "Batu Split 2/3",
+        kategori: "Batu",
+        harga: "350.000",
+        satuan: "/ m³",
+        deskripsi: "Batu pecah ukuran 2/3 untuk cor beton struktural.",
+        gambar: "https://placehold.co/400x300/1a1a1a/f5c518?text=Batu+Split",
+        badge: "BARU"
+      },
+      {
+        nama: "Besi WF 150",
+        kategori: "Besi",
+        harga: "1.250.000",
+        satuan: "/ batang",
+        deskripsi: "Besi WF 150 untuk struktur baja & balok bangunan.",
+        gambar: "https://placehold.co/400x300/1a1a1a/f5c518?text=Besi+WF+150",
+        badge: null
+      },
+      {
+        nama: "Semen Putih",
+        kategori: "Semen",
+        harga: "45.000",
+        satuan: "/ sak",
+        deskripsi: "Semen putih untuk nat keramik, finishing, dan dekorasi.",
+        gambar: "https://placehold.co/400x300/1a1a1a/f5c518?text=Semen+Putih",
+        badge: null
+      },
+      {
+        nama: "Pasir Cor",
+        kategori: "Pasir",
+        harga: "230.000",
+        satuan: "/ m³",
+        deskripsi: "Pasir kasar khusus untuk pengecoran beton.",
+        gambar: "https://placehold.co/400x300/1a1a1a/f5c518?text=Pasir+Cor",
+        badge: "PROMO"
+      },
+      {
+        nama: "Batu Bata Merah",
+        kategori: "Batu",
+        harga: "800",
+        satuan: "/ buah",
+        deskripsi: "Bata merah press, ukuran standar, kuat & presisi.",
+        gambar: "https://placehold.co/400x300/1a1a1a/f5c518?text=Batu+Bata",
+        badge: null
+      },
+    ];
+
+    /* ─────────────────────────────────────────────
+       NOMOR WHATSAPP TOKO (tanpa tanda +)
+       Format internasional: 62 + nomor tanpa 0 awal
+    ────────────────────────────────────────────── */
+    const WA_NUMBER = "6285173365878";
+
+    /* ─────────────────────────────────────────────
+       RENDER FILTER TABS
+    ────────────────────────────────────────────── */
+    function renderTabs() {
+      const kategoriSet = [...new Set(produkData.map(p => p.kategori))];
+      const container = document.getElementById("filterTabs");
+      kategoriSet.forEach(kat => {
+        const btn = document.createElement("button");
+        btn.className = "tab-btn";
+        btn.dataset.filter = kat;
+        btn.textContent = kat;
+        container.appendChild(btn);
+      });
+
+      // Event listener semua tab
+      document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          renderProduk(btn.dataset.filter);
+        });
+      });
+    }
+
+    /* ─────────────────────────────────────────────
+       RENDER KARTU PRODUK
+    ────────────────────────────────────────────── */
+    function renderProduk(filter = "all") {
+      const grid = document.getElementById("productGrid");
+      grid.innerHTML = "";
+
+      const filtered = filter === "all"
+        ? produkData
+        : produkData.filter(p => p.kategori === filter);
+
+      filtered.forEach((p, i) => {
+        // Pesan WhatsApp otomatis
+        const pesanWA = encodeURIComponent(
+          `Halo Beton 3 Cabang, saya ingin tanya produk: *${p.nama}* (${p.harga} ${p.satuan}). Apakah stok tersedia?`
+        );
+        const waLink = `https://wa.me/${WA_NUMBER}?text=${pesanWA}`;
+
+        const card = document.createElement("div");
+        card.className = "product-card";
+        card.style.animationDelay = `${i * 0.07}s`;
+
+        card.innerHTML = `
+          <div class="product-img-wrap">
+            ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ""}
+            <img
+              src="${p.gambar}"
+              alt="${p.nama}"
+              loading="lazy"
+              onerror="this.src='https://placehold.co/400x300/1a1a1a/888?text=Gambar+Tidak+Tersedia'"
+            />
+          </div>
+          <div class="product-body">
+            <div class="product-cat">${p.kategori}</div>
+            <div class="product-name">${p.nama}</div>
+            <div class="product-desc">${p.deskripsi}</div>
+            <div class="product-footer">
+              <div class="product-price">Rp ${p.harga} <small style="font-size:.7rem;color:var(--muted);">${p.satuan}</small></div>
+              <a href="${waLink}" target="_blank" rel="noopener" class="btn-wa-card">
+                💬 Tanya
+              </a>
+            </div>
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+    /* ─────────────────────────────────────────────
+       KIRIM PESAN FORM KONTAK → WHATSAPP
+    ────────────────────────────────────────────── */
+    function kirimPesan() {
+      const nama  = document.getElementById("nama").value.trim();
+      const hp    = document.getElementById("hp").value.trim();
+      const pesan = document.getElementById("pesan").value.trim();
+
+      if (!nama || !hp || !pesan) {
+        alert("⚠️ Mohon lengkapi semua kolom sebelum mengirim.");
+        return;
+      }
+
+      const teks = encodeURIComponent(
+        `Halo Beton 3 Cabang!\n\nNama: ${nama}\nHP: ${hp}\nPesan:\n${pesan}`
+      );
+      window.open(`https://wa.me/${WA_NUMBER}?text=${teks}`, "_blank");
+    }
+
+    /* ─────────────────────────────────────────────
+       NAVBAR: scroll effect + hamburger
+    ────────────────────────────────────────────── */
+    const navbar    = document.getElementById("navbar");
+    const hamburger = document.getElementById("hamburger");
+    const navMenu   = document.getElementById("navMenu");
+
+    window.addEventListener("scroll", () => {
+      navbar.classList.toggle("scrolled", window.scrollY > 20);
+
+      // Tandai menu aktif berdasarkan section yang terlihat
+      const sections = document.querySelectorAll("section[id]");
+      let current = "";
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 80) current = s.id;
+      });
+      document.querySelectorAll(".nav-menu a").forEach(a => {
+        a.classList.toggle("active", a.getAttribute("href") === `#${current}`);
+      });
+    });
+
+    hamburger.addEventListener("click", () => {
+      hamburger.classList.toggle("open");
+      navMenu.classList.toggle("open");
+    });
+
+    // Tutup menu saat link diklik (mobile)
+    navMenu.querySelectorAll("a").forEach(a => {
+      a.addEventListener("click", () => {
+        hamburger.classList.remove("open");
+        navMenu.classList.remove("open");
+      });
+    });
+
+    /* ─────────────────────────────────────────────
+       SCROLL REVEAL (IntersectionObserver)
+    ────────────────────────────────────────────── */
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add("visible");
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+
+    /* ─────────────────────────────────────────────
+       INIT — jalankan saat halaman siap
+    ────────────────────────────────────────────── */
+    renderTabs();
+    renderProduk();
+  </script>
+
+</body>
+</html>
